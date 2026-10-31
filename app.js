@@ -587,8 +587,25 @@
     return value.replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
   }
 
+  function repairText(value) {
+    let text = String(value ?? '');
+    if (!/[\u00c2-\u00c3\u00d8-\u00da]/.test(text)) return text;
+    for (let pass = 0; pass < 6; pass++) {
+      try {
+        const bytes = Uint8Array.from(text, character => character.charCodeAt(0) & 0xff);
+        const candidate = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        if (!candidate || candidate === text) break;
+        text = candidate;
+      } catch {
+        break;
+      }
+      if (!/[\u00c2-\u00c3\u00d8-\u00da]/.test(text)) break;
+    }
+    return text;
+  }
+
   function esc(value) {
-    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    return repairText(value).replace(/[&<>"']/g, ch => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[ch]));
   }
@@ -626,7 +643,7 @@
 
   function tr(obj) {
     if (!obj) return '';
-    return obj[state.lang] || obj.en || '';
+    return repairText(obj[state.lang] || obj.en || '');
   }
 
   function byKey(key) {
