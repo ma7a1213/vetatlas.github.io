@@ -132,7 +132,7 @@
       addIntro: 'Fill in the fields below to create a new entry. The local server saves it to data.json and stores any photo in the images folder.',
       addServerChecking: 'Checking the local server…',
       addServerOk: 'Local server connected. Your entry will be saved to data.json.',
-      addServerDown: 'Browser storage is unavailable. Enable local storage in your browser and reload this page.',
+      addServerDown: 'Saving is unavailable. Start serve.ps1 and open http://localhost:8000, then reload this page.',
       addSectionBasics: 'Basics',
       addSectionClinical: 'Clinical details',
       addSectionSafety: 'Safety & reporting',
@@ -179,7 +179,7 @@
       loginError: 'The sign-in request failed. Is the local server running?',
       loginInvalid: 'Incorrect username or password.',
       loginLocked: 'Too many failed attempts. Wait a minute and try again.',
-      loginNote: 'Administrator changes are stored locally in this browser. They are not sent to the internet.',
+      loginNote: 'The administrator account is stored locally in serve.ps1. Nothing is sent to the internet.',
       loginNeeded: 'Sign in as the administrator to add or edit diseases.',
       loginWelcome: 'Signed in as administrator.',
       loginSignOut: 'Sign out', loginSignedOut: 'Signed out.',
@@ -205,7 +205,7 @@
 
       errorTitle: 'The field guide could not load',
       errorBody: 'data.json could not be read. If you opened index.html directly from disk, your browser may block local JSON for security.',
-      errorServer: 'Host this folder on any static web server, then reload the page.',
+      errorServer: 'Run a local server from this folder, then open http://localhost:8000:',
       errorChoose: 'Choose data.json below to load the guide directly:',
       chooseDataFile: 'Choose data.json',
       notFoundTitle: 'That page is not in the field guide',
@@ -302,7 +302,7 @@
       addIntro: 'خانەکانی خوارەوە پڕبکەرەوە بۆ دروستکردنی تۆمارێکی نوێ. سێرڤەری ناوخۆیی تۆمارەکە لە data.json پاشەکەوت دەکات و وێنەکە لە فۆڵدەری images دادەنێت.',
       addServerChecking: 'پشکنینی سێرڤەری ناوخۆیی…',
       addServerOk: 'سێرڤەری ناوخۆیی پەیوەستە. تۆمارەکەت لە data.json پاشەکەوت دەکرێت.',
-      addServerDown: 'بیرگەی وێبگەڕ بەردەست نییە. بڕۆکۆڵی ناوچەی وێبگەڕ چالاک بکە و دووبارە باربکەرەوە.',
+      addServerDown: 'پاشەکەوتکردن بەردەست نییە. serve.ps1 بکەرەوە و http://localhost:8000 بکەرەوە، پاشان ئەم لاپەڕەیە نوێ بکەرەوە.',
       addSectionBasics: 'زانیاری بنەڕەتی',
       addSectionClinical: 'وردەکاری کلینیکی',
       addSectionSafety: 'سەلامەتی و ڕاپۆرتکردن',
@@ -349,7 +349,7 @@
       loginError: 'داواکاری چوونەژوورەوە سەرکەوتوو نەبوو. ئایا سێرڤەری ناوخۆیی کاردەکات؟',
       loginInvalid: 'ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە.',
       loginLocked: 'هەوڵی زۆر شکستخواردوو. خولەکێک چاوەڕوان بە و دووبارە هەوڵبدە.',
-      loginNote: 'گۆڕانکاریەکانی بەڕێوەبەر لە ئەم وێبگەڕەدا بە شێوەی ناوخۆیی پاشەکەوت دەکرێن. هیچ شتێک بۆ ئینتەرنێت نانێردرێت.',
+      loginNote: 'هەژماری بەڕێوەبەر بە شێوەی ناوخۆیی لە serve.ps1 هەڵگیراوە. هیچ شتێک بۆ ئینتەرنێت نانێردرێت.',
       loginNeeded: 'بۆ زیادکردن یان دەستکاریکردنی نەخۆشی، وەک بەڕێوەبەر بچۆ ژوورەوە.',
       loginWelcome: 'وەک بەڕێوەبەر چوویتە ژوورەوە.',
       loginSignOut: 'چوونەدەرەوە', loginSignedOut: 'چوویتە دەرەوە.',
@@ -374,7 +374,7 @@
       invalidData: 'ئەمە فایلێکی زانیاری دروستی VetAtlas نییە.',
       errorTitle: 'ڕێنماییەکە نەتوانرا بارکرێت',
       errorBody: 'نەتوانرا data.json بخوێنرێتەوە. ئەگەر index.html ڕاستەوخۆ لە دیسکەوە کردووەتەوە، ڕەنگە وێبگەڕەکەت فایلی JSONی ناوخۆیی بەهۆی پاراستنەوە بلۆک بکات.',
-      errorServer: 'ئەم فۆڵدەرە لەسەر هەر سێرڤەرێکی ستاتیک بڵاو بکەرەوە، پاشان لاپەڕەکە نوێ بکەرەوە.',
+      errorServer: 'سێرڤەرێکی ناوخۆیی لەم فۆڵدەوە بکەرەوە، پاشان http://localhost:8000 بکەرەوە:',
       errorChoose: 'data.json لە خوارەوە هەڵبژێرە بۆ کردنەوەی ڕێنماییەکە بە ڕاستەوخۆ:',
       chooseDataFile: 'data.json هەڵبژێرە',
       notFoundTitle: 'ئەم لاپەڕە لە ڕێنماییەکەدا نییە',
@@ -471,7 +471,7 @@
       addIntro: 'املأ الحقول أدناه لإنشاء مدخل جديد. يحفظه الخادم المحلي في data.json ويضع الصورة في مجلد images.',
       addServerChecking: 'جارٍ التحقق من الخادم المحلي…',
       addServerOk: 'الخادم المحلي متصل. سيُحفظ المدخل في data.json.',
-      addServerDown: 'التخزين المحلي غير متاح. فعّل التخزين في المتصفح ثم أعد تحميل الصفحة.',
+      addServerDown: 'الحفظ غير متاح. شغّل serve.ps1 وافتح http://localhost:8000 ثم أعد تحميل الصفحة.',
       addSectionBasics: 'الأساسيات',
       addSectionClinical: 'التفاصيل السريرية',
       addSectionSafety: 'السلامة والإبلاغ',
@@ -518,7 +518,7 @@
       loginError: 'فشل طلب تسجيل الدخول. هل الخادم المحلي يعمل؟',
       loginInvalid: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
       loginLocked: 'محاولات فاشلة كثيرة. انتظر دقيقة ثم حاول مرة أخرى.',
-      loginNote: 'تُحفظ تغييرات المسؤول في هذا المتصفح محلياً ولا تُرسل إلى الإنترنت.',
+      loginNote: 'حساب المسؤول محفوظ محلياً في serve.ps1. لا يُرسل شيء إلى الإنترنت.',
       loginNeeded: 'سجّل الدخول كمسؤول لإضافة الأمراض أو تعديلها.',
       loginWelcome: 'تم تسجيل الدخول كمسؤول.',
       loginSignOut: 'تسجيل الخروج', loginSignedOut: 'تم تسجيل الخروج.',
@@ -543,7 +543,7 @@
       invalidData: 'هذا لا يبدو ملف بيانات VetAtlas صالحاً.',
       errorTitle: 'تعذر تحميل الدليل',
       errorBody: 'تعذرت قراءة data.json. إذا فتحت index.html مباشرة من القرص، فقد يحظر المتصفح ملفات JSON المحلية لأسباب أمنية.',
-      errorServer: 'استضف هذا المجلد على أي خادم استاتيكي ثم أعد تحميل الصفحة.',
+      errorServer: 'شغّل خادماً محلياً من هذا المجلد ثم افتح http://localhost:8000:',
       errorChoose: 'اختر data.json أدناه لتحميل الدليل مباشرة:',
       chooseDataFile: 'اختر data.json',
       notFoundTitle: 'هذه الصفحة غير موجودة في الدليل',
@@ -587,25 +587,8 @@
     return value.replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
   }
 
-  function repairText(value) {
-    let text = String(value ?? '');
-    if (!/[\u00c2-\u00c3\u00d8-\u00da]/.test(text)) return text;
-    for (let pass = 0; pass < 6; pass++) {
-      try {
-        const bytes = Uint8Array.from(text, character => character.charCodeAt(0) & 0xff);
-        const candidate = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-        if (!candidate || candidate === text) break;
-        text = candidate;
-      } catch {
-        break;
-      }
-      if (!/[\u00c2-\u00c3\u00d8-\u00da]/.test(text)) break;
-    }
-    return text;
-  }
-
   function esc(value) {
-    return repairText(value).replace(/[&<>"']/g, ch => ({
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[ch]));
   }
@@ -643,10 +626,7 @@
 
   function tr(obj) {
     if (!obj) return '';
-    if (typeof obj === 'string') return repairText(obj);
-    if (typeof obj !== 'object') return repairText(obj);
-    const firstValue = Object.values(obj).find(value => typeof value === 'string' && value.trim());
-    return repairText(obj[state.lang] || obj.en || firstValue || '');
+    return obj[state.lang] || obj.en || '';
   }
 
   function byKey(key) {
@@ -660,14 +640,12 @@
   function animalMeta(id) { return state.data?.animals.find(x => x.id === id) || { id, en: id, ku: id, ar: id }; }
   function symptomMeta(id) { return state.data?.symptomCatalog.find(x => x.id === id) || { id, en: id, ku: id, ar: id }; }
 
-  function localizedName(d) { return tr(d?.name) || repairText(d?.id || 'Disease'); }
-  function localizedSummary(d) { return tr(d?.summary) || ''; }
+  function localizedName(d) { return tr(d.name); }
+  function localizedSummary(d) { return tr(d.summary); }
   function altName(d) {
-    if (!d?.name || typeof d.name !== 'object') return '';
-    const current = tr(d.name);
-    const candidates = ['en', 'ku', 'ar'].filter(lang => lang !== state.lang && typeof d.name[lang] === 'string');
-    const alternate = candidates.map(lang => repairText(d.name[lang])).find(value => value && value !== current);
-    return alternate || '';
+    const otherLang = state.lang === 'en' ? 'ku' : 'en';
+    if (!d.name[otherLang] || d.name[otherLang] === d.name[state.lang]) return '';
+    return d.name[otherLang];
   }
 
   function systemChip(id) {
@@ -695,84 +673,6 @@
     const value = d.image.trim();
     if (!value) return '';
     return /^(https?:)?\/\//i.test(value) || value.startsWith('/') ? value : value.replace(/^\.\//, '');
-  }
-
-  /* ---------- Browser-only administrator storage ---------- */
-  const ADMIN_USER = 'admin';
-  const ADMIN_PASSWORD = '@Hunar2005';
-  const ADMIN_SESSION_TOKEN = 'vetatlas-local-admin-session';
-  const LOCAL_DATA_KEY = 'vetatlas.localData';
-  const LOCAL_DATA_VERSION_KEY = 'vetatlas.localDataVersion';
-  const LOCAL_DATA_VERSION = '2026-10-31-catalog-fix';
-
-  if (localStorage.getItem(LOCAL_DATA_VERSION_KEY) !== LOCAL_DATA_VERSION) {
-    localStorage.setItem(LOCAL_DATA_KEY, '{}');
-    localStorage.setItem(LOCAL_DATA_VERSION_KEY, LOCAL_DATA_VERSION);
-  }
-
-  function getLocalData() {
-    try { return JSON.parse(localStorage.getItem(LOCAL_DATA_KEY) || '{}') || {}; }
-    catch { return {}; }
-  }
-
-  function saveLocalData(next) {
-    localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(next));
-  }
-
-  function mergeLocalData(baseData) {
-    const local = getLocalData();
-    const deletedAnimals = new Set(local.deletedAnimals || []);
-    const deletedDiseases = new Set(local.deletedDiseases || []);
-    const deletedDefaultCount = [...deletedDiseases].filter(key => (baseData.diseases || []).some(disease => `${disease.animal}:${disease.id}` === key)).length;
-    if (deletedDefaultCount > 0 && deletedDefaultCount >= Math.max(1, (baseData.diseases || []).length - 3)) {
-      deletedDiseases.clear();
-      local.deletedDiseases = (local.deletedDiseases || []).filter(key => !(baseData.diseases || []).some(disease => `${disease.animal}:${disease.id}` === key));
-      saveLocalData(local);
-    }
-    const animalsById = new Map((baseData.animals || []).filter(animal => !deletedAnimals.has(animal.id)).map(animal => [animal.id, { ...animal }]));
-    for (const animal of local.animals || []) {
-      if (!deletedAnimals.has(animal.id)) animalsById.set(animal.id, { ...animal });
-    }
-    const diseaseByKey = new Map();
-    for (const disease of baseData.diseases || []) {
-      const key = `${disease.animal}:${disease.id}`;
-      if (!deletedDiseases.has(key) && !deletedAnimals.has(disease.animal)) diseaseByKey.set(key, { ...disease });
-    }
-    for (const disease of local.diseases || []) {
-      const key = `${disease.animal}:${disease.id}`;
-      if (!deletedDiseases.has(key) && !deletedAnimals.has(disease.animal)) diseaseByKey.set(key, { ...disease });
-    }
-    return { ...baseData, animals: [...animalsById.values()], diseases: [...diseaseByKey.values()] };
-  }
-
-  function saveLocalDisease(disease) {
-    const local = getLocalData();
-    local.diseases = [...(local.diseases || []).filter(item => !(item.animal === disease.animal && item.id === disease.id)), { ...disease }];
-    local.deletedDiseases = (local.deletedDiseases || []).filter(key => key !== `${disease.animal}:${disease.id}`);
-    saveLocalData(local);
-  }
-
-  function deleteLocalDisease(animal, id) {
-    const local = getLocalData();
-    local.diseases = (local.diseases || []).filter(item => !(item.animal === animal && item.id === id));
-    local.deletedDiseases = [...new Set([...(local.deletedDiseases || []), `${animal}:${id}`])];
-    saveLocalData(local);
-  }
-
-  function saveLocalAnimal(animal) {
-    const local = getLocalData();
-    local.animals = [...(local.animals || []).filter(item => item.id !== animal.id), { ...animal }];
-    local.deletedAnimals = (local.deletedAnimals || []).filter(id => id !== animal.id);
-    saveLocalData(local);
-  }
-
-  function deleteLocalAnimal(id) {
-    const local = getLocalData();
-    local.animals = (local.animals || []).filter(item => item.id !== id);
-    local.deletedAnimals = [...new Set([...(local.deletedAnimals || []), id])];
-    local.deletedDiseases = [...new Set([...(local.deletedDiseases || []), ...(local.diseases || []).filter(disease => disease.animal === id).map(disease => `${disease.animal}:${disease.id}`)])];
-    local.diseases = (local.diseases || []).filter(disease => disease.animal !== id);
-    saveLocalData(local);
   }
 
   /* ---------- Administrator session helpers ---------- */
@@ -803,14 +703,16 @@
   }
 
   async function initAuth() {
-    if (!AUTH.token) {
+    if (location.protocol === 'file:' || !AUTH.token) {
       AUTH.user = '';
       applyAuthUI();
       return;
     }
     try {
-      if (AUTH.token !== ADMIN_SESSION_TOKEN) throw new Error('unauthorized');
-      AUTH.user = ADMIN_USER;
+      const response = await fetch('api/session', { cache: 'no-store', headers: authHeaders() });
+      if (!response.ok) throw new Error('unauthorized');
+      const json = await response.json();
+      AUTH.user = json.user || 'admin';
     } catch {
       clearSession();
     }
@@ -818,6 +720,7 @@
   }
 
   async function signOut() {
+    try { await fetch('api/logout', { method: 'POST', headers: authHeaders() }); } catch { /* server stopped */ }
     clearSession();
     showToast(t('loginSignedOut'));
     navigateTo('#/');
@@ -935,10 +838,10 @@
   /* ---------- Data loading ---------- */
   async function loadData() {
     try {
-      const response = await fetch(`data.json?v=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch('data.json', { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const json = await response.json();
-      acceptData(mergeLocalData(json));
+      acceptData(json);
     } catch (error) {
       state.loadingError = true;
       renderLoadError(error);
@@ -950,17 +853,6 @@
       renderLoadError(new Error(t('invalidData')));
       return;
     }
-    const arrayFields = ['systems', 'aliases', 'symptoms', 'symptomTags'];
-    (json.diseases || []).forEach(disease => {
-      arrayFields.forEach(field => {
-        if (Array.isArray(disease[field])) return;
-        if (typeof disease[field] === 'string' && disease[field].trim()) {
-          disease[field] = field === 'systems' ? disease[field].split(',').map(value => value.trim()).filter(Boolean) : [disease[field]];
-        } else {
-          disease[field] = [];
-        }
-      });
-    });
     state.data = json;
     (state.data.animals || []).forEach(animal => {
       if (!state.listFilters[animal.id]) {
@@ -987,7 +879,7 @@
         <p class="eyebrow">VetAtlas</p>
         <h1>${esc(t('errorTitle'))}</h1>
         <p>${esc(t('errorBody'))}</p>
-        ${isFile ? `<p>Open this site through a static web server, such as Vercel, Netlify, or GitHub Pages.</p><pre><code>python -m http.server 8000
+        ${isFile ? `<p>${esc(t('errorServer'))}</p><pre><code>powershell -ExecutionPolicy Bypass -File .\\serve.ps1
 # or, if Python is installed:
 python -m http.server 8000</code></pre>` : `<p class="muted">${esc(error?.message || '')}</p>`}
         <label class="btn btn--secondary" for="data-file-input">${icon('book')} ${esc(t('chooseDataFile'))}</label>
@@ -1436,9 +1328,6 @@ function renderListPage(main, animal) {
   const animalData = animalMeta(animal);
   const isCattle = animal === 'cattle';
   const total = state.data.diseases.filter(d => d.animal === animal).length;
-  if (!state.listFilters[animal]) {
-    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
-  }
   const filters = state.listFilters[animal];
   document.title = `${isCattle ? t('cattleListTitle') : t('sheepListTitle')} — VetAtlas`;
 
@@ -1514,9 +1403,6 @@ function renderListPage(main, animal) {
 }
 
 function setupListPage(animal) {
-  if (!state.listFilters[animal]) {
-    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
-  }
   const filters = state.listFilters[animal];
   const search = document.getElementById('list-search');
   const clearSearch = document.getElementById('list-search-clear');
@@ -1603,9 +1489,6 @@ function resetListFilters(animal) {
 function refreshListResults(animal) {
   const container = document.getElementById('disease-results');
   if (!container) return;
-  if (!state.listFilters[animal]) {
-    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
-  }
   const filters = state.listFilters[animal];
   const all = state.data.diseases.filter(d => d.animal === animal);
   const searchMatchIds = filters.q
@@ -1645,10 +1528,7 @@ function refreshListResults(animal) {
     ${active.length ? `<div class="active-filters" aria-label="${esc(t('activeFilters'))}">${active.map(item => `
       <span class="filter-chip">${esc(item.label)} <button type="button" data-remove-filter="${esc(item.key)}" aria-label="${esc(t('removeFilter', { name: item.label }))}">${icon('x')}</button></span>
     `).join('')}</div>` : ''}
-    ${filtered.length ? `<ul class="disease-grid">${filtered.map(d => {
-      try { return renderDiseaseCard(d); }
-      catch (error) { console.error('Disease card could not render:', d?.id, error); return ''; }
-    }).join('')}</ul>` : `
+    ${filtered.length ? `<ul class="disease-grid">${filtered.map(d => renderDiseaseCard(d)).join('')}</ul>` : `
       <div class="empty-state">
         <span class="empty-state__icon">${icon('search')}</span>
         <h3>${esc(t('noDiseasesTitle'))}</h3>
@@ -1662,10 +1542,8 @@ function refreshListResults(animal) {
 function renderDiseaseCard(d) {
   const other = altName(d);
   const href = `#/disease/${esc(d.animal)}/${esc(d.id)}`;
-  const diseaseSystems = Array.isArray(d.systems) ? d.systems : (typeof d.systems === 'string' ? d.systems.split(',').map(value => value.trim()).filter(Boolean) : []);
-  const primarySystem = diseaseSystems[0] || 'systemic';
-  const systems = diseaseSystems.slice(0, 3).map(systemChip).join('');
-  const aliases = Array.isArray(d.aliases) ? d.aliases : (typeof d.aliases === 'string' ? [d.aliases] : []);
+  const primarySystem = d.systems?.[0] || 'systemic';
+  const systems = (d.systems || []).slice(0, 3).map(systemChip).join('');
   const image = imageSrc(d);
   return `<li class="disease-card card-focus">
     ${image ? `<div class="disease-card__media"><img src="${esc(image)}" alt="" loading="lazy" decoding="async"></div>` : ''}
@@ -2445,8 +2323,17 @@ function renderLoginPage(main, next = '#/add', notice = '') {
     if (label) label.textContent = t('loginSaving');
 
     try {
-      if (user !== ADMIN_USER || password !== ADMIN_PASSWORD) throw new Error(t('loginInvalid'));
-      saveSession(ADMIN_SESSION_TOKEN, ADMIN_USER);
+      const response = await fetch('api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, password })
+      });
+      const json = await response.json().catch(() => ({}));
+      if (response.status === 401) throw new Error(t('loginInvalid'));
+      if (response.status === 429) throw new Error(t('loginLocked'));
+      if (!response.ok) throw new Error(json.error || t('loginError'));
+
+      saveSession(json.token, json.user);
       showToast(t('loginWelcome'));
       navigateTo(target);
     } catch (error) {
@@ -2472,35 +2359,12 @@ function renderAccountPage(main) {
       <div class="detail-card auth-card">
         <p class="account-state">${icon('check')} ${esc(t('accountSignedIn'))} <strong>${esc(AUTH.user)}</strong></p>
         <p>${esc(t('accountBody'))}</p>
-        <div class="animal-manager" style="margin-block:1rem">
-          ${(state.data.animals || []).map(animal => `
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--line)">
-              <strong>${esc(tr(animal))}</strong>
-              <button class="btn btn--danger btn--small" type="button" data-delete-animal="${esc(animal.id)}">Delete</button>
-            </div>`).join('')}
-        </div>
         <div class="add-actions">
           <a class="btn btn--primary" href="#/add">${icon('plus')} ${esc(t('navAdd'))}</a>
           <button class="btn btn--ghost" type="button" id="logout">${icon('logout')} ${esc(t('loginSignOut'))}</button>
         </div>
       </div>
     </div>`;
-  document.querySelectorAll('[data-delete-animal]').forEach(button => {
-    button.addEventListener('click', async () => {
-      const animalId = button.getAttribute('data-delete-animal');
-      const animal = animalMeta(animalId);
-      if (!window.confirm(`Delete ${tr(animal)} and all its diseases?`)) return;
-      try {
-        deleteLocalAnimal(animalId);
-        state.data.animals = state.data.animals.filter(item => item.id !== animalId);
-        state.data.diseases = state.data.diseases.filter(item => item.animal !== animalId);
-        showToast('Animal deleted.');
-        renderAccountPage(main);
-      } catch (error) {
-        showToast(error?.message || 'Animal delete failed');
-      }
-    });
-  });
   document.getElementById('logout')?.addEventListener('click', signOut);
 }
 
@@ -2782,7 +2646,6 @@ function renderDiseaseForm(main, { mode = 'add', disease = null } = {}) {
         </section>
 
         <div class="add-actions">
-          ${isEdit ? '<button class="btn btn--danger" type="button" id="delete-disease-button">Delete disease</button>' : ''}
           <button class="btn btn--primary" type="submit" id="add-submit" disabled>
             ${icon('check')} <span>${esc(t(isEdit ? 'editSubmit' : 'addSubmit'))}</span>
           </button>
@@ -2806,17 +2669,6 @@ function readFileAsDataURL(file) {
 function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
   const isEdit = mode === 'edit' && Boolean(disease);
   const form = document.getElementById('add-form');
-  document.getElementById('delete-disease-button')?.addEventListener('click', async () => {
-    if (!window.confirm(`Delete ${disease.name?.en || 'this disease'}?`)) return;
-    try {
-      deleteLocalDisease(disease.animal, disease.id);
-      showToast('Disease deleted.');
-      await loadData();
-      navigateTo('#/');
-    } catch (error) {
-      showErrors([error?.message || 'Delete failed']);
-    }
-  });
   if (!form) return;
   const status = document.getElementById('add-server-status');
   const submit = document.getElementById('add-submit');
@@ -2841,12 +2693,9 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
       ar: document.getElementById('new-animal-ar').value.trim() || english
     };
     try {
-      let json;
-      const id = payload.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      if (!id) throw new Error('Enter a valid animal name.');
-      const animal = { id, en: payload.en, ku: payload.ku, ar: payload.ar };
-      saveLocalAnimal(animal);
-      json = { animal };
+      const response = await fetch('api/animals', { method: 'POST', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(payload) });
+      const json = await response.json();
+      if (!response.ok) throw new Error(json.error || 'Could not add animal');
       state.data.animals.push(json.animal);
       const option = document.createElement('option');
       option.value = json.animal.id;
@@ -2885,7 +2734,17 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
     if (submit) submit.disabled = !ready;
   };
 
-  setServerState(true);
+  if (location.protocol === 'file:') {
+    setServerState(false);
+  } else {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    fetch('api/health', { cache: 'no-store', signal: controller.signal })
+      .then(response => response.ok ? response.json() : Promise.reject(new Error('offline')))
+      .then(json => setServerState(Boolean(json?.ok)))
+      .catch(() => setServerState(false))
+      .finally(() => clearTimeout(timer));
+  }
 
   const updateTagCount = () => {
     if (!tagCount) return;
@@ -3123,7 +2982,19 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
     try {
       let imagePath = currentImage;
       if (imageFile) {
-        imagePath = await readFileAsDataURL(imageFile);
+        const dataUrl = await readFileAsDataURL(imageFile);
+        const uploadResponse = await fetch('api/upload', {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ filename: imageFile.name, data: dataUrl })
+        });
+        const uploaded = await uploadResponse.json().catch(() => ({}));
+        if (uploadResponse.status === 401) {
+          clearSession();
+          throw new Error(t('authExpired'));
+        }
+        if (!uploadResponse.ok) throw new Error(uploaded.error || t('addError'));
+        imagePath = uploaded.path || '';
       }
 
       const body = {
@@ -3134,13 +3005,20 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
         image: imagePath,
         imageAlt: value('add-image-alt')
       };
-      const { name, summary, ...diseaseData } = body;
-      let diseaseId = isEdit ? disease.id : body.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').replace(/-+/g, '-');
-      if (!diseaseId) throw new Error(t('addFieldRequired', { field: t('addNameEn') }));
-      const localDisease = { ...diseaseData, name, summary, id: diseaseId, animal: body.animal };
-      if (isEdit && disease.animal !== body.animal) deleteLocalDisease(disease.animal, disease.id);
-      saveLocalDisease(localDisease);
-      const saved = { animal: body.animal, id: diseaseId };
+      const endpoint = isEdit
+        ? `api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`
+        : 'api/diseases';
+      const response = await fetch(endpoint, {
+        method: isEdit ? 'PUT' : 'POST',
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify(body)
+      });
+      const saved = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        clearSession();
+        throw new Error(t('authExpired'));
+      }
+      if (!response.ok) throw new Error(saved.error || t('addError'));
 
       showToast(t(isEdit ? 'editSuccess' : 'addSuccess'));
       await loadData();
