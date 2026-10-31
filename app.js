@@ -711,6 +711,12 @@
     const local = getLocalData();
     const deletedAnimals = new Set(local.deletedAnimals || []);
     const deletedDiseases = new Set(local.deletedDiseases || []);
+    const deletedDefaultCount = [...deletedDiseases].filter(key => (baseData.diseases || []).some(disease => `${disease.animal}:${disease.id}` === key)).length;
+    if (deletedDefaultCount > 0 && deletedDefaultCount >= Math.max(1, (baseData.diseases || []).length - 3)) {
+      deletedDiseases.clear();
+      local.deletedDiseases = (local.deletedDiseases || []).filter(key => !(baseData.diseases || []).some(disease => `${disease.animal}:${disease.id}` === key));
+      saveLocalData(local);
+    }
     const animalsById = new Map((baseData.animals || []).filter(animal => !deletedAnimals.has(animal.id)).map(animal => [animal.id, { ...animal }]));
     for (const animal of local.animals || []) {
       if (!deletedAnimals.has(animal.id)) animalsById.set(animal.id, { ...animal });
@@ -1407,6 +1413,9 @@ function renderListPage(main, animal) {
   const animalData = animalMeta(animal);
   const isCattle = animal === 'cattle';
   const total = state.data.diseases.filter(d => d.animal === animal).length;
+  if (!state.listFilters[animal]) {
+    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
+  }
   const filters = state.listFilters[animal];
   document.title = `${isCattle ? t('cattleListTitle') : t('sheepListTitle')} — VetAtlas`;
 
@@ -1482,6 +1491,9 @@ function renderListPage(main, animal) {
 }
 
 function setupListPage(animal) {
+  if (!state.listFilters[animal]) {
+    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
+  }
   const filters = state.listFilters[animal];
   const search = document.getElementById('list-search');
   const clearSearch = document.getElementById('list-search-clear');
@@ -1568,6 +1580,9 @@ function resetListFilters(animal) {
 function refreshListResults(animal) {
   const container = document.getElementById('disease-results');
   if (!container) return;
+  if (!state.listFilters[animal]) {
+    state.listFilters[animal] = { q: '', type: 'all', system: 'all', severity: 'all', sort: 'az' };
+  }
   const filters = state.listFilters[animal];
   const all = state.data.diseases.filter(d => d.animal === animal);
   const searchMatchIds = filters.q
