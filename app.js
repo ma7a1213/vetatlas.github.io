@@ -132,7 +132,7 @@
       addIntro: 'Fill in the fields below to create a new entry. The local server saves it to data.json and stores any photo in the images folder.',
       addServerChecking: 'Checking the local server…',
       addServerOk: 'Local server connected. Your entry will be saved to data.json.',
-      addServerDown: 'Saving is unavailable. Start serve.ps1 and open http://localhost:8000, then reload this page.',
+      addServerDown: 'Browser storage is unavailable. Enable local storage in your browser and reload this page.',
       addSectionBasics: 'Basics',
       addSectionClinical: 'Clinical details',
       addSectionSafety: 'Safety & reporting',
@@ -179,7 +179,7 @@
       loginError: 'The sign-in request failed. Is the local server running?',
       loginInvalid: 'Incorrect username or password.',
       loginLocked: 'Too many failed attempts. Wait a minute and try again.',
-      loginNote: 'The administrator account is stored locally in serve.ps1. Nothing is sent to the internet.',
+      loginNote: 'Administrator changes are stored locally in this browser. They are not sent to the internet.',
       loginNeeded: 'Sign in as the administrator to add or edit diseases.',
       loginWelcome: 'Signed in as administrator.',
       loginSignOut: 'Sign out', loginSignedOut: 'Signed out.',
@@ -205,7 +205,7 @@
 
       errorTitle: 'The field guide could not load',
       errorBody: 'data.json could not be read. If you opened index.html directly from disk, your browser may block local JSON for security.',
-      errorServer: 'Run a local server from this folder, then open http://localhost:8000:',
+      errorServer: 'Host this folder on any static web server, then reload the page.',
       errorChoose: 'Choose data.json below to load the guide directly:',
       chooseDataFile: 'Choose data.json',
       notFoundTitle: 'That page is not in the field guide',
@@ -302,7 +302,7 @@
       addIntro: 'خانەکانی خوارەوە پڕبکەرەوە بۆ دروستکردنی تۆمارێکی نوێ. سێرڤەری ناوخۆیی تۆمارەکە لە data.json پاشەکەوت دەکات و وێنەکە لە فۆڵدەری images دادەنێت.',
       addServerChecking: 'پشکنینی سێرڤەری ناوخۆیی…',
       addServerOk: 'سێرڤەری ناوخۆیی پەیوەستە. تۆمارەکەت لە data.json پاشەکەوت دەکرێت.',
-      addServerDown: 'پاشەکەوتکردن بەردەست نییە. serve.ps1 بکەرەوە و http://localhost:8000 بکەرەوە، پاشان ئەم لاپەڕەیە نوێ بکەرەوە.',
+      addServerDown: 'بیرگەی وێبگەڕ بەردەست نییە. بڕۆکۆڵی ناوچەی وێبگەڕ چالاک بکە و دووبارە باربکەرەوە.',
       addSectionBasics: 'زانیاری بنەڕەتی',
       addSectionClinical: 'وردەکاری کلینیکی',
       addSectionSafety: 'سەلامەتی و ڕاپۆرتکردن',
@@ -349,7 +349,7 @@
       loginError: 'داواکاری چوونەژوورەوە سەرکەوتوو نەبوو. ئایا سێرڤەری ناوخۆیی کاردەکات؟',
       loginInvalid: 'ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە.',
       loginLocked: 'هەوڵی زۆر شکستخواردوو. خولەکێک چاوەڕوان بە و دووبارە هەوڵبدە.',
-      loginNote: 'هەژماری بەڕێوەبەر بە شێوەی ناوخۆیی لە serve.ps1 هەڵگیراوە. هیچ شتێک بۆ ئینتەرنێت نانێردرێت.',
+      loginNote: 'گۆڕانکاریەکانی بەڕێوەبەر لە ئەم وێبگەڕەدا بە شێوەی ناوخۆیی پاشەکەوت دەکرێن. هیچ شتێک بۆ ئینتەرنێت نانێردرێت.',
       loginNeeded: 'بۆ زیادکردن یان دەستکاریکردنی نەخۆشی، وەک بەڕێوەبەر بچۆ ژوورەوە.',
       loginWelcome: 'وەک بەڕێوەبەر چوویتە ژوورەوە.',
       loginSignOut: 'چوونەدەرەوە', loginSignedOut: 'چوویتە دەرەوە.',
@@ -374,7 +374,7 @@
       invalidData: 'ئەمە فایلێکی زانیاری دروستی VetAtlas نییە.',
       errorTitle: 'ڕێنماییەکە نەتوانرا بارکرێت',
       errorBody: 'نەتوانرا data.json بخوێنرێتەوە. ئەگەر index.html ڕاستەوخۆ لە دیسکەوە کردووەتەوە، ڕەنگە وێبگەڕەکەت فایلی JSONی ناوخۆیی بەهۆی پاراستنەوە بلۆک بکات.',
-      errorServer: 'سێرڤەرێکی ناوخۆیی لەم فۆڵدەوە بکەرەوە، پاشان http://localhost:8000 بکەرەوە:',
+      errorServer: 'ئەم فۆڵدەرە لەسەر هەر سێرڤەرێکی ستاتیک بڵاو بکەرەوە، پاشان لاپەڕەکە نوێ بکەرەوە.',
       errorChoose: 'data.json لە خوارەوە هەڵبژێرە بۆ کردنەوەی ڕێنماییەکە بە ڕاستەوخۆ:',
       chooseDataFile: 'data.json هەڵبژێرە',
       notFoundTitle: 'ئەم لاپەڕە لە ڕێنماییەکەدا نییە',
@@ -471,7 +471,7 @@
       addIntro: 'املأ الحقول أدناه لإنشاء مدخل جديد. يحفظه الخادم المحلي في data.json ويضع الصورة في مجلد images.',
       addServerChecking: 'جارٍ التحقق من الخادم المحلي…',
       addServerOk: 'الخادم المحلي متصل. سيُحفظ المدخل في data.json.',
-      addServerDown: 'الحفظ غير متاح. شغّل serve.ps1 وافتح http://localhost:8000 ثم أعد تحميل الصفحة.',
+      addServerDown: 'التخزين المحلي غير متاح. فعّل التخزين في المتصفح ثم أعد تحميل الصفحة.',
       addSectionBasics: 'الأساسيات',
       addSectionClinical: 'التفاصيل السريرية',
       addSectionSafety: 'السلامة والإبلاغ',
@@ -518,7 +518,7 @@
       loginError: 'فشل طلب تسجيل الدخول. هل الخادم المحلي يعمل؟',
       loginInvalid: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
       loginLocked: 'محاولات فاشلة كثيرة. انتظر دقيقة ثم حاول مرة أخرى.',
-      loginNote: 'حساب المسؤول محفوظ محلياً في serve.ps1. لا يُرسل شيء إلى الإنترنت.',
+      loginNote: 'تُحفظ تغييرات المسؤول في هذا المتصفح محلياً ولا تُرسل إلى الإنترنت.',
       loginNeeded: 'سجّل الدخول كمسؤول لإضافة الأمراض أو تعديلها.',
       loginWelcome: 'تم تسجيل الدخول كمسؤول.',
       loginSignOut: 'تسجيل الخروج', loginSignedOut: 'تم تسجيل الخروج.',
@@ -543,7 +543,7 @@
       invalidData: 'هذا لا يبدو ملف بيانات VetAtlas صالحاً.',
       errorTitle: 'تعذر تحميل الدليل',
       errorBody: 'تعذرت قراءة data.json. إذا فتحت index.html مباشرة من القرص، فقد يحظر المتصفح ملفات JSON المحلية لأسباب أمنية.',
-      errorServer: 'شغّل خادماً محلياً من هذا المجلد ثم افتح http://localhost:8000:',
+      errorServer: 'استضف هذا المجلد على أي خادم استاتيكي ثم أعد تحميل الصفحة.',
       errorChoose: 'اختر data.json أدناه لتحميل الدليل مباشرة:',
       chooseDataFile: 'اختر data.json',
       notFoundTitle: 'هذه الصفحة غير موجودة في الدليل',
@@ -675,115 +675,69 @@
     return /^(https?:)?\/\//i.test(value) || value.startsWith('/') ? value : value.replace(/^\.\//, '');
   }
 
-  /* ---------- Supabase cloud backend ---------- */
-  const SUPABASE = window.SUPABASE_CONFIG || {};
-  const CLOUD_ENABLED = Boolean(SUPABASE.url && SUPABASE.anonKey && !SUPABASE.url.includes('YOUR_PROJECT'));
+  /* ---------- Browser-only administrator storage ---------- */
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASSWORD = '@Hunar2005';
+  const ADMIN_SESSION_TOKEN = 'vetatlas-local-admin-session';
+  const LOCAL_DATA_KEY = 'vetatlas.localData';
 
-  function cloudHeaders(extra = {}) {
-    return {
-      apikey: SUPABASE.anonKey,
-      Authorization: `Bearer ${AUTH.token || SUPABASE.anonKey}`,
-      ...extra
-    };
+  function getLocalData() {
+    try { return JSON.parse(localStorage.getItem(LOCAL_DATA_KEY) || '{}') || {}; }
+    catch { return {}; }
   }
 
-  async function cloudRequest(path, options = {}) {
-    if (!CLOUD_ENABLED) throw new Error('Supabase is not configured.');
-    const response = await fetch(`${SUPABASE.url}/rest/v1/${path}`, {
-      ...options,
-      headers: cloudHeaders(options.headers || {})
-    });
-    const text = await response.text();
-    let json = {};
-    if (text) json = JSON.parse(text);
-    if (!response.ok) throw new Error(json.message || json.error_description || json.error || `Cloud request failed (${response.status})`);
-    return json;
+  function saveLocalData(next) {
+    localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(next));
   }
 
-  async function cloudLogin(email, password) {
-    const response = await fetch(`${SUPABASE.url}/auth/v1/token?grant_type=password`, {
-      method: 'POST',
-      headers: cloudHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ email, password })
-    });
-    const json = await response.json();
-    if (!response.ok) throw new Error(json.msg || json.error_description || json.error || 'Login failed');
-    return json;
-  }
-
-  async function cloudUser(token) {
-    const response = await fetch(`${SUPABASE.url}/auth/v1/user`, {
-      headers: cloudHeaders({ Authorization: `Bearer ${token}` })
-    });
-    if (!response.ok) throw new Error('Invalid session');
-    return response.json();
-  }
-
-  async function cloudUploadImage(file) {
-    const dataUrl = await readFileAsDataURL(file);
-    const comma = dataUrl.indexOf(',');
-    const base64 = dataUrl.slice(comma + 1);
-    const binary = atob(base64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    const extension = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-    const path = `diseases/${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
-    const response = await fetch(`${SUPABASE.url}/storage/v1/object/vetatlas-images/${path}`, {
-      method: 'POST',
-      headers: cloudHeaders({ 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' }),
-      body: bytes
-    });
-    if (!response.ok) throw new Error('The image could not be uploaded to cloud storage.');
-    return `${SUPABASE.url}/storage/v1/object/public/vetatlas-images/${path}`;
-  }
-
-  async function loadCloudData(baseData) {
-    if (!CLOUD_ENABLED) return baseData;
-    const [cloudAnimals, cloudDiseases] = await Promise.all([
-      cloudRequest('vetatlas_animals?select=id,name&order=id.asc'),
-      cloudRequest('vetatlas_diseases?select=id,animal,data')
-    ]);
-    const animalsById = new Map((baseData.animals || []).map(item => [item.id, item]));
-    for (const animal of cloudAnimals || []) {
-      animalsById.set(animal.id, { id: animal.id, ...(animal.name || {}) });
+  function mergeLocalData(baseData) {
+    const local = getLocalData();
+    const deletedAnimals = new Set(local.deletedAnimals || []);
+    const deletedDiseases = new Set(local.deletedDiseases || []);
+    const animalsById = new Map((baseData.animals || []).filter(animal => !deletedAnimals.has(animal.id)).map(animal => [animal.id, { ...animal }]));
+    for (const animal of local.animals || []) {
+      if (!deletedAnimals.has(animal.id)) animalsById.set(animal.id, { ...animal });
     }
-    const diseasesByKey = new Map((baseData.diseases || []).map(item => [`${item.animal}:${item.id}`, item]));
-    for (const row of cloudDiseases || []) {
-      const disease = { ...(row.data || {}), id: row.id, animal: row.animal };
-      diseasesByKey.set(`${disease.animal}:${disease.id}`, disease);
+    const diseaseByKey = new Map();
+    for (const disease of baseData.diseases || []) {
+      const key = `${disease.animal}:${disease.id}`;
+      if (!deletedDiseases.has(key) && !deletedAnimals.has(disease.animal)) diseaseByKey.set(key, { ...disease });
     }
-    return { ...baseData, animals: [...animalsById.values()], diseases: [...diseasesByKey.values()] };
+    for (const disease of local.diseases || []) {
+      const key = `${disease.animal}:${disease.id}`;
+      if (!deletedDiseases.has(key) && !deletedAnimals.has(disease.animal)) diseaseByKey.set(key, { ...disease });
+    }
+    return { ...baseData, animals: [...animalsById.values()], diseases: [...diseaseByKey.values()] };
   }
 
-  async function saveCloudDisease(animal, id, payload, create) {
-    const row = { id, animal, data: payload };
-    const endpoint = create
-      ? 'vetatlas_diseases'
-      : `vetatlas_diseases?animal=eq.${encodeURIComponent(animal)}&id=eq.${encodeURIComponent(id)}`;
-    const response = await cloudRequest(endpoint, {
-      method: create ? 'POST' : 'PATCH',
-      headers: { 'Content-Type': 'application/json', Prefer: 'return=representation' },
-      body: JSON.stringify(create ? row : { data: payload })
-    });
-    if (!create) return response;
-    return row;
+  function saveLocalDisease(disease) {
+    const local = getLocalData();
+    local.diseases = [...(local.diseases || []).filter(item => !(item.animal === disease.animal && item.id === disease.id)), { ...disease }];
+    local.deletedDiseases = (local.deletedDiseases || []).filter(key => key !== `${disease.animal}:${disease.id}`);
+    saveLocalData(local);
   }
 
-  async function deleteCloudDisease(animal, id) {
-    return cloudRequest(`vetatlas_diseases?animal=eq.${encodeURIComponent(animal)}&id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  function deleteLocalDisease(animal, id) {
+    const local = getLocalData();
+    local.diseases = (local.diseases || []).filter(item => !(item.animal === animal && item.id === id));
+    local.deletedDiseases = [...new Set([...(local.deletedDiseases || []), `${animal}:${id}`])];
+    saveLocalData(local);
   }
 
-  async function saveCloudAnimal(animal) {
-    return cloudRequest('vetatlas_animals', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify({ id: animal.id, name: { en: animal.en, ku: animal.ku, ar: animal.ar } })
-    });
+  function saveLocalAnimal(animal) {
+    const local = getLocalData();
+    local.animals = [...(local.animals || []).filter(item => item.id !== animal.id), { ...animal }];
+    local.deletedAnimals = (local.deletedAnimals || []).filter(id => id !== animal.id);
+    saveLocalData(local);
   }
 
-  async function deleteCloudAnimal(id) {
-    await cloudRequest(`vetatlas_diseases?animal=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
-    return cloudRequest(`vetatlas_animals?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  function deleteLocalAnimal(id) {
+    const local = getLocalData();
+    local.animals = (local.animals || []).filter(item => item.id !== id);
+    local.deletedAnimals = [...new Set([...(local.deletedAnimals || []), id])];
+    local.deletedDiseases = [...new Set([...(local.deletedDiseases || []), ...(local.diseases || []).filter(disease => disease.animal === id).map(disease => `${disease.animal}:${disease.id}`)])];
+    local.diseases = (local.diseases || []).filter(disease => disease.animal !== id);
+    saveLocalData(local);
   }
 
   /* ---------- Administrator session helpers ---------- */
@@ -820,9 +774,8 @@
       return;
     }
     try {
-      const user = CLOUD_ENABLED ? await cloudUser(AUTH.token) : null;
-      if (CLOUD_ENABLED && (!user || user.email !== SUPABASE.adminEmail)) throw new Error('unauthorized');
-      AUTH.user = CLOUD_ENABLED ? 'admin' : 'admin';
+      if (AUTH.token !== ADMIN_SESSION_TOKEN) throw new Error('unauthorized');
+      AUTH.user = ADMIN_USER;
     } catch {
       clearSession();
     }
@@ -950,8 +903,7 @@
       const response = await fetch('data.json', { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const json = await response.json();
-      const merged = CLOUD_ENABLED ? await loadCloudData(json) : json;
-      acceptData(merged);
+      acceptData(mergeLocalData(json));
     } catch (error) {
       state.loadingError = true;
       renderLoadError(error);
@@ -989,7 +941,7 @@
         <p class="eyebrow">VetAtlas</p>
         <h1>${esc(t('errorTitle'))}</h1>
         <p>${esc(t('errorBody'))}</p>
-        ${isFile ? `<p>${esc(t('errorServer'))}</p><pre><code>powershell -ExecutionPolicy Bypass -File .\\serve.ps1
+        ${isFile ? `<p>Open this site through a static web server, such as Vercel, Netlify, or GitHub Pages.</p><pre><code>python -m http.server 8000
 # or, if Python is installed:
 python -m http.server 8000</code></pre>` : `<p class="muted">${esc(error?.message || '')}</p>`}
         <label class="btn btn--secondary" for="data-file-input">${icon('book')} ${esc(t('chooseDataFile'))}</label>
@@ -2388,8 +2340,8 @@ function renderLoginPage(main, next = '#/add', notice = '') {
       <form class="auth-card" id="login-form" novalidate>
         <div class="form-errors" id="login-errors" role="alert" tabindex="-1" hidden></div>
         <div class="field">
-          <label for="login-user">${esc(CLOUD_ENABLED ? 'Admin email' : t('loginUser'))}</label>
-          <input class="input" id="login-user" type="${CLOUD_ENABLED ? 'email' : 'text'}" autocomplete="${CLOUD_ENABLED ? 'email' : 'username'}" maxlength="100" required dir="ltr" lang="en" spellcheck="false">
+          <label for="login-user">${esc(t('loginUser'))}</label>
+          <input class="input" id="login-user" type="text" autocomplete="username" maxlength="100" required dir="ltr" lang="en" spellcheck="false">
         </div>
         <div class="field">
           <label for="login-password">${esc(t('loginPassword'))}</label>
@@ -2433,9 +2385,8 @@ function renderLoginPage(main, next = '#/add', notice = '') {
     if (label) label.textContent = t('loginSaving');
 
     try {
-      const email = CLOUD_ENABLED ? SUPABASE.adminEmail : user;
-      const json = CLOUD_ENABLED ? await cloudLogin(email, password) : (() => { throw new Error(t('loginError')); })();
-      saveSession(json.access_token, CLOUD_ENABLED ? 'admin' : json.user);
+      if (user !== ADMIN_USER || password !== ADMIN_PASSWORD) throw new Error(t('loginInvalid'));
+      saveSession(ADMIN_SESSION_TOKEN, ADMIN_USER);
       showToast(t('loginWelcome'));
       navigateTo(target);
     } catch (error) {
@@ -2480,7 +2431,7 @@ function renderAccountPage(main) {
       const animal = animalMeta(animalId);
       if (!window.confirm(`Delete ${tr(animal)} and all its diseases?`)) return;
       try {
-        if (CLOUD_ENABLED) await deleteCloudAnimal(animalId);
+        deleteLocalAnimal(animalId);
         state.data.animals = state.data.animals.filter(item => item.id !== animalId);
         state.data.diseases = state.data.diseases.filter(item => item.animal !== animalId);
         showToast('Animal deleted.');
@@ -2798,11 +2749,7 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
   document.getElementById('delete-disease-button')?.addEventListener('click', async () => {
     if (!window.confirm(`Delete ${disease.name?.en || 'this disease'}?`)) return;
     try {
-      if (CLOUD_ENABLED) await deleteCloudDisease(disease.animal, disease.id);
-      else {
-        const response = await fetch(`api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`, { method: 'DELETE', headers: authHeaders() });
-        if (!response.ok) throw new Error('Delete failed');
-      }
+      deleteLocalDisease(disease.animal, disease.id);
       showToast('Disease deleted.');
       await loadData();
       navigateTo('#/');
@@ -2835,16 +2782,11 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
     };
     try {
       let json;
-      if (CLOUD_ENABLED) {
-        const id = payload.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        const animal = { id, en: payload.en, ku: payload.ku, ar: payload.ar };
-        await saveCloudAnimal(animal);
-        json = { animal };
-      } else {
-        const response = await fetch('api/animals', { method: 'POST', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(payload) });
-        json = await response.json();
-        if (!response.ok) throw new Error(json.error || 'Could not add animal');
-      }
+      const id = payload.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (!id) throw new Error('Enter a valid animal name.');
+      const animal = { id, en: payload.en, ku: payload.ku, ar: payload.ar };
+      saveLocalAnimal(animal);
+      json = { animal };
       state.data.animals.push(json.animal);
       const option = document.createElement('option');
       option.value = json.animal.id;
@@ -2883,19 +2825,7 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
     if (submit) submit.disabled = !ready;
   };
 
-  if (CLOUD_ENABLED) {
-    setServerState(true);
-  } else if (location.protocol === 'file:') {
-    setServerState(false);
-  } else {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
-    fetch('api/health', { cache: 'no-store', signal: controller.signal })
-      .then(response => response.ok ? response.json() : Promise.reject(new Error('offline')))
-      .then(json => setServerState(Boolean(json?.ok)))
-      .catch(() => setServerState(false))
-      .finally(() => clearTimeout(timer));
-  }
+  setServerState(true);
 
   const updateTagCount = () => {
     if (!tagCount) return;
@@ -3132,22 +3062,8 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
 
     try {
       let imagePath = currentImage;
-      if (imageFile && CLOUD_ENABLED) {
-        imagePath = await cloudUploadImage(imageFile);
-      } else if (imageFile) {
-        const dataUrl = await readFileAsDataURL(imageFile);
-        const uploadResponse = await fetch('api/upload', {
-          method: 'POST',
-          headers: authHeaders({ 'Content-Type': 'application/json' }),
-          body: JSON.stringify({ filename: imageFile.name, data: dataUrl })
-        });
-        const uploaded = await uploadResponse.json().catch(() => ({}));
-        if (uploadResponse.status === 401) {
-          clearSession();
-          throw new Error(t('authExpired'));
-        }
-        if (!uploadResponse.ok) throw new Error(uploaded.error || t('addError'));
-        imagePath = uploaded.path || '';
+      if (imageFile) {
+        imagePath = await readFileAsDataURL(imageFile);
       }
 
       const body = {
@@ -3158,26 +3074,13 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
         image: imagePath,
         imageAlt: value('add-image-alt')
       };
-      let saved;
-      if (CLOUD_ENABLED) {
-        const diseaseId = isEdit ? disease.id : body.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').replace(/-+/g, '-');
-        if (!diseaseId) throw new Error(t('addFieldRequired', { field: t('addNameEn') }));
-        const { name, summary, ...diseaseData } = body;
-        await saveCloudDisease(body.animal, diseaseId, { ...diseaseData, name, summary }, !isEdit);
-        saved = { animal: body.animal, id: diseaseId };
-      } else {
-        const endpoint = isEdit
-          ? `api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`
-          : 'api/diseases';
-        const response = await fetch(endpoint, {
-          method: isEdit ? 'PUT' : 'POST',
-          headers: authHeaders({ 'Content-Type': 'application/json' }),
-          body: JSON.stringify(body)
-        });
-        saved = await response.json().catch(() => ({}));
-        if (response.status === 401) { clearSession(); throw new Error(t('authExpired')); }
-        if (!response.ok) throw new Error(saved.error || t('addError'));
-      }
+      const { name, summary, ...diseaseData } = body;
+      let diseaseId = isEdit ? disease.id : body.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').replace(/-+/g, '-');
+      if (!diseaseId) throw new Error(t('addFieldRequired', { field: t('addNameEn') }));
+      const localDisease = { ...diseaseData, name, summary, id: diseaseId, animal: body.animal };
+      if (isEdit && disease.animal !== body.animal) deleteLocalDisease(disease.animal, disease.id);
+      saveLocalDisease(localDisease);
+      const saved = { animal: body.animal, id: diseaseId };
 
       showToast(t(isEdit ? 'editSuccess' : 'addSuccess'));
       await loadData();
