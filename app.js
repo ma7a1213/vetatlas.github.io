@@ -643,7 +643,10 @@
 
   function tr(obj) {
     if (!obj) return '';
-    return repairText(obj[state.lang] || obj.en || '');
+    if (typeof obj === 'string') return repairText(obj);
+    if (typeof obj !== 'object') return repairText(obj);
+    const firstValue = Object.values(obj).find(value => typeof value === 'string' && value.trim());
+    return repairText(obj[state.lang] || obj.en || firstValue || '');
   }
 
   function byKey(key) {
@@ -657,12 +660,14 @@
   function animalMeta(id) { return state.data?.animals.find(x => x.id === id) || { id, en: id, ku: id, ar: id }; }
   function symptomMeta(id) { return state.data?.symptomCatalog.find(x => x.id === id) || { id, en: id, ku: id, ar: id }; }
 
-  function localizedName(d) { return tr(d.name); }
-  function localizedSummary(d) { return tr(d.summary); }
+  function localizedName(d) { return tr(d?.name) || repairText(d?.id || 'Disease'); }
+  function localizedSummary(d) { return tr(d?.summary) || ''; }
   function altName(d) {
-    const otherLang = state.lang === 'en' ? 'ku' : 'en';
-    if (!d.name[otherLang] || d.name[otherLang] === d.name[state.lang]) return '';
-    return d.name[otherLang];
+    if (!d?.name || typeof d.name !== 'object') return '';
+    const current = tr(d.name);
+    const candidates = ['en', 'ku', 'ar'].filter(lang => lang !== state.lang && typeof d.name[lang] === 'string');
+    const alternate = candidates.map(lang => repairText(d.name[lang])).find(value => value && value !== current);
+    return alternate || '';
   }
 
   function systemChip(id) {
@@ -945,6 +950,17 @@
       renderLoadError(new Error(t('invalidData')));
       return;
     }
+    const arrayFields = ['systems', 'aliases', 'symptoms', 'symptomTags'];
+    (json.diseases || []).forEach(disease => {
+      arrayFields.forEach(field => {
+        if (Array.isArray(disease[field])) return;
+        if (typeof disease[field] === 'string' && disease[field].trim()) {
+          disease[field] = field === 'systems' ? disease[field].split(',').map(value => value.trim()).filter(Boolean) : [disease[field]];
+        } else {
+          disease[field] = [];
+        }
+      });
+    });
     state.data = json;
     (state.data.animals || []).forEach(animal => {
       if (!state.listFilters[animal.id]) {
@@ -1629,7 +1645,10 @@ function refreshListResults(animal) {
     ${active.length ? `<div class="active-filters" aria-label="${esc(t('activeFilters'))}">${active.map(item => `
       <span class="filter-chip">${esc(item.label)} <button type="button" data-remove-filter="${esc(item.key)}" aria-label="${esc(t('removeFilter', { name: item.label }))}">${icon('x')}</button></span>
     `).join('')}</div>` : ''}
-    ${filtered.length ? `<ul class="disease-grid">${filtered.map(d => renderDiseaseCard(d)).join('')}</ul>` : `
+    ${filtered.length ? `<ul class="disease-grid">${filtered.map(d => {
+      try { return renderDiseaseCard(d); }
+      catch (error) { console.error('Disease card could not render:', d?.id, error); return ''; }
+    }).join('')}</ul>` : `
       <div class="empty-state">
         <span class="empty-state__icon">${icon('search')}</span>
         <h3>${esc(t('noDiseasesTitle'))}</h3>
@@ -1643,8 +1662,10 @@ function refreshListResults(animal) {
 function renderDiseaseCard(d) {
   const other = altName(d);
   const href = `#/disease/${esc(d.animal)}/${esc(d.id)}`;
-  const primarySystem = d.systems?.[0] || 'systemic';
-  const systems = (d.systems || []).slice(0, 3).map(systemChip).join('');
+  const diseaseSystems = Array.isArray(d.systems) ? d.systems : (typeof d.systems === 'string' ? d.systems.split(',').map(value => value.trim()).filter(Boolean) : []);
+  const primarySystem = diseaseSystems[0] || 'systemic';
+  const systems = diseaseSystems.slice(0, 3).map(systemChip).join('');
+  const aliases = Array.isArray(d.aliases) ? d.aliases : (typeof d.aliases === 'string' ? [d.aliases] : []);
   const image = imageSrc(d);
   return `<li class="disease-card card-focus">
     ${image ? `<div class="disease-card__media"><img src="${esc(image)}" alt="" loading="lazy" decoding="async"></div>` : ''}
