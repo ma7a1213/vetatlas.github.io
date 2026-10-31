@@ -1,7 +1,13 @@
-// Paste your project values from Supabase Dashboard > Project Settings > API.
-// Keep this file public on GitHub Pages; the anon key is designed to be public.
+// Supabase Dashboard > Project Settings > API.
 window.SUPABASE_CONFIG = {
-  url: 'https://YOUR_PROJECT_ID.supabase.co',
-  anonKey: 'YOUR_SUPABASE_ANON_KEY',
-  adminEmail: 'admin@example.com'
+  url: 'https://apcyhufyishrmjlhqijw.supabase.co',
+  anonKey: 'sb_publishable_6kOczbdReBYBznZ8fcvo0A_ZBqSHMwz'
 };
+
+(function initializeSupabase() {
+  if (!window.supabase || window.SUPABASE_CONFIG.url.includes('YOUR_PROJECT_ID')) return;
+  window.vetSupabase = window.supabase.createClient(
+    window.SUPABASE_CONFIG.url,
+    window.SUPABASE_CONFIG.anonKey
+  );
+})();

@@ -933,12 +933,67 @@
   }
 
   /* ---------- Data loading ---------- */
+  function supabaseIsConfigured() {
+    return Boolean(window.vetSupabase && window.SUPABASE_CONFIG && !window.SUPABASE_CONFIG.url.includes('YOUR_PROJECT_ID'));
+  }
+
+  async function loadSupabaseConditions() {
+    if (!supabaseIsConfigured()) return null;
+    const { data, error } = await window.vetSupabase
+      .from('conditions')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  }
+
+  async function insertSupabaseCondition(disease) {
+    const { id, animal, ...data } = disease;
+    const { error } = await window.vetSupabase.from('conditions').insert({ id, animal, data });
+    if (error) throw error;
+  }
+
+  async function updateSupabaseCondition(original, disease) {
+    const { id, animal, ...data } = disease;
+    if (original.animal !== animal || original.id !== id) {
+      await window.vetSupabase.from('conditions').delete().eq('animal', original.animal).eq('id', original.id);
+      await insertSupabaseCondition(disease);
+      return;
+    }
+    const { error } = await window.vetSupabase.from('conditions').update({ animal, data }).eq('id', id).eq('animal', animal);
+    if (error) throw error;
+  }
+
+  async function deleteSupabaseCondition(animal, id) {
+    const { error } = await window.vetSupabase.from('conditions').delete().eq('animal', animal).eq('id', id);
+    if (error) throw error;
+  }
+
   async function loadData() {
     try {
       const response = await fetch(`data.json?v=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const json = await response.json();
-      acceptData(mergeLocalData(json));
+      if (supabaseIsConfigured()) {
+        try {
+          const rows = await loadSupabaseConditions();
+          const cloudDiseases = rows.map(row => ({
+            ...(row.data && typeof row.data === 'object' ? row.data : {}),
+            id: row.id,
+            animal: row.animal
+          })).filter(disease => disease.id && disease.animal);
+          if (cloudDiseases.length) json.diseases = cloudDiseases;
+        } catch (error) {
+          console.warn('Supabase conditions could not be loaded; using static data.', error);
+        }
+      }
+      acceptData(json);
+      if (supabaseIsConfigured() && !window.__vetatlasRealtimeChannel) {
+        window.__vetatlasRealtimeChannel = window.vetSupabase
+          .channel('vetatlas-conditions-live')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'conditions' }, () => loadData())
+          .subscribe();
+      }
     } catch (error) {
       state.loadingError = true;
       renderLoadError(error);
@@ -2809,7 +2864,8 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
   document.getElementById('delete-disease-button')?.addEventListener('click', async () => {
     if (!window.confirm(`Delete ${disease.name?.en || 'this disease'}?`)) return;
     try {
-      deleteLocalDisease(disease.animal, disease.id);
+      if (supabaseIsConfigured()) await deleteSupabaseCondition(disease.animal, disease.id);
+      else deleteLocalDisease(disease.animal, disease.id);
       showToast('Disease deleted.');
       await loadData();
       navigateTo('#/');
@@ -3137,9 +3193,14 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
       const { name, summary, ...diseaseData } = body;
       let diseaseId = isEdit ? disease.id : body.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').replace(/-+/g, '-');
       if (!diseaseId) throw new Error(t('addFieldRequired', { field: t('addNameEn') }));
-      const localDisease = { ...diseaseData, name, summary, id: diseaseId, animal: body.animal };
-      if (isEdit && disease.animal !== body.animal) deleteLocalDisease(disease.animal, disease.id);
-      saveLocalDisease(localDisease);
+      const condition = { ...diseaseData, name, summary, id: diseaseId, animal: body.animal };
+      if (supabaseIsConfigured()) {
+        if (isEdit) await updateSupabaseCondition(disease, condition);
+        else await insertSupabaseCondition(condition);
+      } else {
+        if (isEdit && disease.animal !== body.animal) deleteLocalDisease(disease.animal, disease.id);
+        saveLocalDisease(condition);
+      }
       const saved = { animal: body.animal, id: diseaseId };
 
       showToast(t(isEdit ? 'editSuccess' : 'addSuccess'));

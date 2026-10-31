@@ -1,43 +1,32 @@
--- Replace these two values with your Supabase admin email, then run in SQL Editor.
-create table if not exists public.vetatlas_animals (
+create table if not exists public.conditions (
   id text primary key,
-  name jsonb not null default '{}'::jsonb
-);
-
-create table if not exists public.vetatlas_diseases (
-  id text not null,
-  animal text not null references public.vetatlas_animals(id) on delete cascade,
+  animal text not null,
   data jsonb not null default '{}'::jsonb,
-  primary key (animal, id)
+  created_at timestamptz not null default now()
 );
 
-insert into public.vetatlas_animals (id, name) values
-  ('cattle', '{"en":"Cattle","ku":"مانگا","ar":"الأبقار"}'::jsonb),
-  ('sheep', '{"en":"Sheep","ku":"مەڕ","ar":"الأغنام"}'::jsonb)
-on conflict (id) do update set name = excluded.name;
+alter table public.conditions enable row level security;
+grant usage on schema public to anon, authenticated;
 
-alter table public.vetatlas_animals enable row level security;
-alter table public.vetatlas_diseases enable row level security;
+revoke all on public.conditions from anon, authenticated;
+grant select, insert, update, delete on public.conditions to anon, authenticated;
 
-drop policy if exists "vetatlas public read animals" on public.vetatlas_animals;
-drop policy if exists "vetatlas admin animals" on public.vetatlas_animals;
-drop policy if exists "vetatlas public read diseases" on public.vetatlas_diseases;
-drop policy if exists "vetatlas admin diseases" on public.vetatlas_diseases;
+drop policy if exists "Public can read conditions" on public.conditions;
+drop policy if exists "Public can insert conditions" on public.conditions;
+drop policy if exists "Public can update conditions" on public.conditions;
+drop policy if exists "Public can delete conditions" on public.conditions;
 
-create policy "vetatlas public read animals" on public.vetatlas_animals for select using (true);
-create policy "vetatlas admin animals" on public.vetatlas_animals for all using ((auth.jwt() ->> 'email') = 'admin@example.com') with check ((auth.jwt() ->> 'email') = 'admin@example.com');
-create policy "vetatlas public read diseases" on public.vetatlas_diseases for select using (true);
-create policy "vetatlas admin diseases" on public.vetatlas_diseases for all using ((auth.jwt() ->> 'email') = 'admin@example.com') with check ((auth.jwt() ->> 'email') = 'admin@example.com');
+create policy "Public can read conditions"
+on public.conditions for select using (true);
 
-insert into storage.buckets (id, name, public)
-values ('vetatlas-images', 'vetatlas-images', true)
-on conflict (id) do update set public = true;
+create policy "Public can insert conditions"
+on public.conditions for insert with check (true);
 
-drop policy if exists "vetatlas public image read" on storage.objects;
-drop policy if exists "vetatlas admin image write" on storage.objects;
-drop policy if exists "vetatlas admin image update" on storage.objects;
-drop policy if exists "vetatlas admin image delete" on storage.objects;
-create policy "vetatlas public image read" on storage.objects for select using (bucket_id = 'vetatlas-images');
-create policy "vetatlas admin image write" on storage.objects for insert with check (bucket_id = 'vetatlas-images' and (auth.jwt() ->> 'email') = 'admin@example.com');
-create policy "vetatlas admin image update" on storage.objects for update using (bucket_id = 'vetatlas-images' and (auth.jwt() ->> 'email') = 'admin@example.com') with check (bucket_id = 'vetatlas-images' and (auth.jwt() ->> 'email') = 'admin@example.com');
-create policy "vetatlas admin image delete" on storage.objects for delete using (bucket_id = 'vetatlas-images' and (auth.jwt() ->> 'email') = 'admin@example.com');
+create policy "Public can update conditions"
+on public.conditions for update using (true) with check (true);
+
+create policy "Public can delete conditions"
+on public.conditions for delete using (true);
+
+-- Optional realtime support for immediate cross-device updates.
+alter publication supabase_realtime add table public.conditions;
