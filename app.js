@@ -697,6 +697,13 @@
   const ADMIN_PASSWORD = '@Hunar2005';
   const ADMIN_SESSION_TOKEN = 'vetatlas-local-admin-session';
   const LOCAL_DATA_KEY = 'vetatlas.localData';
+  const LOCAL_DATA_VERSION_KEY = 'vetatlas.localDataVersion';
+  const LOCAL_DATA_VERSION = '2026-10-31-catalog-fix';
+
+  if (localStorage.getItem(LOCAL_DATA_VERSION_KEY) !== LOCAL_DATA_VERSION) {
+    localStorage.setItem(LOCAL_DATA_KEY, '{}');
+    localStorage.setItem(LOCAL_DATA_VERSION_KEY, LOCAL_DATA_VERSION);
+  }
 
   function getLocalData() {
     try { return JSON.parse(localStorage.getItem(LOCAL_DATA_KEY) || '{}') || {}; }
@@ -923,7 +930,7 @@
   /* ---------- Data loading ---------- */
   async function loadData() {
     try {
-      const response = await fetch('data.json', { cache: 'no-store' });
+      const response = await fetch(`data.json?v=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const json = await response.json();
       acceptData(mergeLocalData(json));
