@@ -152,6 +152,26 @@ The disease name and summary should include all three languages. Clinical descri
 
 `meatSafe: true` means meat may enter the food chain only after recovery, official ante- and post-mortem inspection and completion of drug withdrawal periods. It is never permission to eat an animal that died of disease or was not slaughtered under inspection. Use official local meat-inspection rules for every decision.
 
+## Supabase cloud setup (GitHub Pages)
+
+1. Create a free project at [supabase.com](https://supabase.com).
+2. Open **SQL Editor**, open [supabase.sql](supabase.sql), replace every `admin@example.com` with your admin email, and run it.
+3. Open **Authentication > Users**, create a user with that exact email and a strong password, and enable that user for email/password sign-in.
+4. Open **Project Settings > API**, copy the Project URL and `anon` public key.
+5. Fill those values in [supabase-config.js](supabase-config.js):
+
+```js
+window.SUPABASE_CONFIG = {
+  url: 'https://YOUR_PROJECT_ID.supabase.co',
+  anonKey: 'YOUR_SUPABASE_ANON_KEY',
+  adminEmail: 'your-admin@example.com'
+};
+```
+
+6. Commit and deploy the site to GitHub Pages. Visitors can read public disease data without signing in; only the configured admin email can add, edit, or delete data.
+
+Animal, disease, and image changes are saved in Supabase immediately and appear for visitors after their next data refresh. Existing entries in `data.json` remain available as the offline/static fallback. The local `serve.ps1` files are not used on GitHub Pages.
+
 ## Content note
 
 The entries are practical educational summaries, not a formulary or a diagnostic standard. Drug choices, withdrawal periods, vaccination schedules and notifiable-disease rules vary by country and change over time. Have local content reviewed by a licensed veterinarian before using the guide for decisions.

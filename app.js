@@ -675,6 +675,117 @@
     return /^(https?:)?\/\//i.test(value) || value.startsWith('/') ? value : value.replace(/^\.\//, '');
   }
 
+  /* ---------- Supabase cloud backend ---------- */
+  const SUPABASE = window.SUPABASE_CONFIG || {};
+  const CLOUD_ENABLED = Boolean(SUPABASE.url && SUPABASE.anonKey && !SUPABASE.url.includes('YOUR_PROJECT'));
+
+  function cloudHeaders(extra = {}) {
+    return {
+      apikey: SUPABASE.anonKey,
+      Authorization: `Bearer ${AUTH.token || SUPABASE.anonKey}`,
+      ...extra
+    };
+  }
+
+  async function cloudRequest(path, options = {}) {
+    if (!CLOUD_ENABLED) throw new Error('Supabase is not configured.');
+    const response = await fetch(`${SUPABASE.url}/rest/v1/${path}`, {
+      ...options,
+      headers: cloudHeaders(options.headers || {})
+    });
+    const text = await response.text();
+    let json = {};
+    if (text) json = JSON.parse(text);
+    if (!response.ok) throw new Error(json.message || json.error_description || json.error || `Cloud request failed (${response.status})`);
+    return json;
+  }
+
+  async function cloudLogin(email, password) {
+    const response = await fetch(`${SUPABASE.url}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: cloudHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({ email, password })
+    });
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.msg || json.error_description || json.error || 'Login failed');
+    return json;
+  }
+
+  async function cloudUser(token) {
+    const response = await fetch(`${SUPABASE.url}/auth/v1/user`, {
+      headers: cloudHeaders({ Authorization: `Bearer ${token}` })
+    });
+    if (!response.ok) throw new Error('Invalid session');
+    return response.json();
+  }
+
+  async function cloudUploadImage(file) {
+    const dataUrl = await readFileAsDataURL(file);
+    const comma = dataUrl.indexOf(',');
+    const base64 = dataUrl.slice(comma + 1);
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const extension = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+    const path = `diseases/${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
+    const response = await fetch(`${SUPABASE.url}/storage/v1/object/vetatlas-images/${path}`, {
+      method: 'POST',
+      headers: cloudHeaders({ 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' }),
+      body: bytes
+    });
+    if (!response.ok) throw new Error('The image could not be uploaded to cloud storage.');
+    return `${SUPABASE.url}/storage/v1/object/public/vetatlas-images/${path}`;
+  }
+
+  async function loadCloudData(baseData) {
+    if (!CLOUD_ENABLED) return baseData;
+    const [cloudAnimals, cloudDiseases] = await Promise.all([
+      cloudRequest('vetatlas_animals?select=id,name&order=id.asc'),
+      cloudRequest('vetatlas_diseases?select=id,animal,data')
+    ]);
+    const animalsById = new Map((baseData.animals || []).map(item => [item.id, item]));
+    for (const animal of cloudAnimals || []) {
+      animalsById.set(animal.id, { id: animal.id, ...(animal.name || {}) });
+    }
+    const diseasesByKey = new Map((baseData.diseases || []).map(item => [`${item.animal}:${item.id}`, item]));
+    for (const row of cloudDiseases || []) {
+      const disease = { ...(row.data || {}), id: row.id, animal: row.animal };
+      diseasesByKey.set(`${disease.animal}:${disease.id}`, disease);
+    }
+    return { ...baseData, animals: [...animalsById.values()], diseases: [...diseasesByKey.values()] };
+  }
+
+  async function saveCloudDisease(animal, id, payload, create) {
+    const row = { id, animal, data: payload };
+    const endpoint = create
+      ? 'vetatlas_diseases'
+      : `vetatlas_diseases?animal=eq.${encodeURIComponent(animal)}&id=eq.${encodeURIComponent(id)}`;
+    const response = await cloudRequest(endpoint, {
+      method: create ? 'POST' : 'PATCH',
+      headers: { 'Content-Type': 'application/json', Prefer: 'return=representation' },
+      body: JSON.stringify(create ? row : { data: payload })
+    });
+    if (!create) return response;
+    return row;
+  }
+
+  async function deleteCloudDisease(animal, id) {
+    return cloudRequest(`vetatlas_diseases?animal=eq.${encodeURIComponent(animal)}&id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  }
+
+  async function saveCloudAnimal(animal) {
+    return cloudRequest('vetatlas_animals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify({ id: animal.id, name: { en: animal.en, ku: animal.ku, ar: animal.ar } })
+    });
+  }
+
+  async function deleteCloudAnimal(id) {
+    await cloudRequest(`vetatlas_diseases?animal=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+    return cloudRequest(`vetatlas_animals?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  }
+
   /* ---------- Administrator session helpers ---------- */
   function authHeaders(extra = {}) {
     return AUTH.token ? { ...extra, Authorization: `Bearer ${AUTH.token}` } : { ...extra };
@@ -703,16 +814,15 @@
   }
 
   async function initAuth() {
-    if (location.protocol === 'file:' || !AUTH.token) {
+    if (!AUTH.token) {
       AUTH.user = '';
       applyAuthUI();
       return;
     }
     try {
-      const response = await fetch('api/session', { cache: 'no-store', headers: authHeaders() });
-      if (!response.ok) throw new Error('unauthorized');
-      const json = await response.json();
-      AUTH.user = json.user || 'admin';
+      const user = CLOUD_ENABLED ? await cloudUser(AUTH.token) : null;
+      if (CLOUD_ENABLED && (!user || user.email !== SUPABASE.adminEmail)) throw new Error('unauthorized');
+      AUTH.user = CLOUD_ENABLED ? 'admin' : 'admin';
     } catch {
       clearSession();
     }
@@ -720,7 +830,6 @@
   }
 
   async function signOut() {
-    try { await fetch('api/logout', { method: 'POST', headers: authHeaders() }); } catch { /* server stopped */ }
     clearSession();
     showToast(t('loginSignedOut'));
     navigateTo('#/');
@@ -841,7 +950,8 @@
       const response = await fetch('data.json', { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const json = await response.json();
-      acceptData(json);
+      const merged = CLOUD_ENABLED ? await loadCloudData(json) : json;
+      acceptData(merged);
     } catch (error) {
       state.loadingError = true;
       renderLoadError(error);
@@ -2278,8 +2388,8 @@ function renderLoginPage(main, next = '#/add', notice = '') {
       <form class="auth-card" id="login-form" novalidate>
         <div class="form-errors" id="login-errors" role="alert" tabindex="-1" hidden></div>
         <div class="field">
-          <label for="login-user">${esc(t('loginUser'))}</label>
-          <input class="input" id="login-user" type="text" autocomplete="username" maxlength="100" required dir="ltr" lang="en" spellcheck="false">
+          <label for="login-user">${esc(CLOUD_ENABLED ? 'Admin email' : t('loginUser'))}</label>
+          <input class="input" id="login-user" type="${CLOUD_ENABLED ? 'email' : 'text'}" autocomplete="${CLOUD_ENABLED ? 'email' : 'username'}" maxlength="100" required dir="ltr" lang="en" spellcheck="false">
         </div>
         <div class="field">
           <label for="login-password">${esc(t('loginPassword'))}</label>
@@ -2323,17 +2433,9 @@ function renderLoginPage(main, next = '#/add', notice = '') {
     if (label) label.textContent = t('loginSaving');
 
     try {
-      const response = await fetch('api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, password })
-      });
-      const json = await response.json().catch(() => ({}));
-      if (response.status === 401) throw new Error(t('loginInvalid'));
-      if (response.status === 429) throw new Error(t('loginLocked'));
-      if (!response.ok) throw new Error(json.error || t('loginError'));
-
-      saveSession(json.token, json.user);
+      const email = CLOUD_ENABLED ? SUPABASE.adminEmail : user;
+      const json = CLOUD_ENABLED ? await cloudLogin(email, password) : (() => { throw new Error(t('loginError')); })();
+      saveSession(json.access_token, CLOUD_ENABLED ? 'admin' : json.user);
       showToast(t('loginWelcome'));
       navigateTo(target);
     } catch (error) {
@@ -2359,12 +2461,35 @@ function renderAccountPage(main) {
       <div class="detail-card auth-card">
         <p class="account-state">${icon('check')} ${esc(t('accountSignedIn'))} <strong>${esc(AUTH.user)}</strong></p>
         <p>${esc(t('accountBody'))}</p>
+        <div class="animal-manager" style="margin-block:1rem">
+          ${(state.data.animals || []).map(animal => `
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--line)">
+              <strong>${esc(tr(animal))}</strong>
+              <button class="btn btn--danger btn--small" type="button" data-delete-animal="${esc(animal.id)}">Delete</button>
+            </div>`).join('')}
+        </div>
         <div class="add-actions">
           <a class="btn btn--primary" href="#/add">${icon('plus')} ${esc(t('navAdd'))}</a>
           <button class="btn btn--ghost" type="button" id="logout">${icon('logout')} ${esc(t('loginSignOut'))}</button>
         </div>
       </div>
     </div>`;
+  document.querySelectorAll('[data-delete-animal]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const animalId = button.getAttribute('data-delete-animal');
+      const animal = animalMeta(animalId);
+      if (!window.confirm(`Delete ${tr(animal)} and all its diseases?`)) return;
+      try {
+        if (CLOUD_ENABLED) await deleteCloudAnimal(animalId);
+        state.data.animals = state.data.animals.filter(item => item.id !== animalId);
+        state.data.diseases = state.data.diseases.filter(item => item.animal !== animalId);
+        showToast('Animal deleted.');
+        renderAccountPage(main);
+      } catch (error) {
+        showToast(error?.message || 'Animal delete failed');
+      }
+    });
+  });
   document.getElementById('logout')?.addEventListener('click', signOut);
 }
 
@@ -2646,6 +2771,7 @@ function renderDiseaseForm(main, { mode = 'add', disease = null } = {}) {
         </section>
 
         <div class="add-actions">
+          ${isEdit ? '<button class="btn btn--danger" type="button" id="delete-disease-button">Delete disease</button>' : ''}
           <button class="btn btn--primary" type="submit" id="add-submit" disabled>
             ${icon('check')} <span>${esc(t(isEdit ? 'editSubmit' : 'addSubmit'))}</span>
           </button>
@@ -2669,6 +2795,21 @@ function readFileAsDataURL(file) {
 function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
   const isEdit = mode === 'edit' && Boolean(disease);
   const form = document.getElementById('add-form');
+  document.getElementById('delete-disease-button')?.addEventListener('click', async () => {
+    if (!window.confirm(`Delete ${disease.name?.en || 'this disease'}?`)) return;
+    try {
+      if (CLOUD_ENABLED) await deleteCloudDisease(disease.animal, disease.id);
+      else {
+        const response = await fetch(`api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`, { method: 'DELETE', headers: authHeaders() });
+        if (!response.ok) throw new Error('Delete failed');
+      }
+      showToast('Disease deleted.');
+      await loadData();
+      navigateTo('#/');
+    } catch (error) {
+      showErrors([error?.message || 'Delete failed']);
+    }
+  });
   if (!form) return;
   const status = document.getElementById('add-server-status');
   const submit = document.getElementById('add-submit');
@@ -2693,9 +2834,17 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
       ar: document.getElementById('new-animal-ar').value.trim() || english
     };
     try {
-      const response = await fetch('api/animals', { method: 'POST', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(payload) });
-      const json = await response.json();
-      if (!response.ok) throw new Error(json.error || 'Could not add animal');
+      let json;
+      if (CLOUD_ENABLED) {
+        const id = payload.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const animal = { id, en: payload.en, ku: payload.ku, ar: payload.ar };
+        await saveCloudAnimal(animal);
+        json = { animal };
+      } else {
+        const response = await fetch('api/animals', { method: 'POST', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(payload) });
+        json = await response.json();
+        if (!response.ok) throw new Error(json.error || 'Could not add animal');
+      }
       state.data.animals.push(json.animal);
       const option = document.createElement('option');
       option.value = json.animal.id;
@@ -2734,7 +2883,9 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
     if (submit) submit.disabled = !ready;
   };
 
-  if (location.protocol === 'file:') {
+  if (CLOUD_ENABLED) {
+    setServerState(true);
+  } else if (location.protocol === 'file:') {
     setServerState(false);
   } else {
     const controller = new AbortController();
@@ -2981,7 +3132,9 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
 
     try {
       let imagePath = currentImage;
-      if (imageFile) {
+      if (imageFile && CLOUD_ENABLED) {
+        imagePath = await cloudUploadImage(imageFile);
+      } else if (imageFile) {
         const dataUrl = await readFileAsDataURL(imageFile);
         const uploadResponse = await fetch('api/upload', {
           method: 'POST',
@@ -3005,20 +3158,26 @@ function setupDiseaseForm({ mode = 'add', disease = null } = {}) {
         image: imagePath,
         imageAlt: value('add-image-alt')
       };
-      const endpoint = isEdit
-        ? `api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`
-        : 'api/diseases';
-      const response = await fetch(endpoint, {
-        method: isEdit ? 'PUT' : 'POST',
-        headers: authHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify(body)
-      });
-      const saved = await response.json().catch(() => ({}));
-      if (response.status === 401) {
-        clearSession();
-        throw new Error(t('authExpired'));
+      let saved;
+      if (CLOUD_ENABLED) {
+        const diseaseId = isEdit ? disease.id : body.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').replace(/-+/g, '-');
+        if (!diseaseId) throw new Error(t('addFieldRequired', { field: t('addNameEn') }));
+        const { name, summary, ...diseaseData } = body;
+        await saveCloudDisease(body.animal, diseaseId, { ...diseaseData, name, summary }, !isEdit);
+        saved = { animal: body.animal, id: diseaseId };
+      } else {
+        const endpoint = isEdit
+          ? `api/diseases/${encodeURIComponent(disease.animal)}/${encodeURIComponent(disease.id)}`
+          : 'api/diseases';
+        const response = await fetch(endpoint, {
+          method: isEdit ? 'PUT' : 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify(body)
+        });
+        saved = await response.json().catch(() => ({}));
+        if (response.status === 401) { clearSession(); throw new Error(t('authExpired')); }
+        if (!response.ok) throw new Error(saved.error || t('addError'));
       }
-      if (!response.ok) throw new Error(saved.error || t('addError'));
 
       showToast(t(isEdit ? 'editSuccess' : 'addSuccess'));
       await loadData();
